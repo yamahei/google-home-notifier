@@ -75,6 +75,7 @@ Browser.defaultResolverSequence = [
 ```
 
 2: Modify the following file "node_modules/google-tts-api/lib/key.js"
+
 Find this line:
 ```javascript
 eval(html.match(/TKK=eval\(\'\(.*\)\'\);/g)[0]);
@@ -83,3 +84,5 @@ And change to:
 ```javascript
 eval(html.match(/TKK='[0-9]+.[0-9]+'/g)[0]);
 ```
+
+see: https://qiita.com/k_keisuke/items/2974ddaf2bf24a3ea32e
