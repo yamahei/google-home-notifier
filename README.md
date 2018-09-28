@@ -53,9 +53,9 @@ Also install these packages:
 sudo apt-get install git-core libnss-mdns libavahi-compat-libdnssd-dev
 ```
 
-## After "npm install"
+## IMPORTANT: After "npm install"
 
-Modify the following file "node_modules/mdns/lib/browser.js"
+1: Modify the following file "node_modules/mdns/lib/browser.js"
 ```sh
 vi node_modules/mdns/lib/browser.js
 ```
@@ -72,4 +72,14 @@ Browser.defaultResolverSequence = [
   rst.DNSServiceResolve(), 'DNSServiceGetAddrInfo' in dns_sd ? rst.DNSServiceGetAddrInfo() : rst.getaddrinfo({families:[4]})
 , rst.makeAddressesUnique()
 ];
+```
+
+2: Modify the following file "node_modules/google-tts-api/lib/key.js"
+Find this line:
+```javascript
+eval(html.match(/TKK=eval\(\'\(.*\)\'\);/g)[0]);
+```
+And change to:
+```javascript
+eval(html.match(/TKK='[0-9]+.[0-9]+'/g)[0]);
 ```
