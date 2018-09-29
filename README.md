@@ -1,5 +1,6 @@
 # google-home-notifier
-Send notifications to Google Home
+Send notifications to Google Home.
+Enhanced the correspondence of multiple devices.
 
 #### Installation
 ```sh
@@ -8,19 +9,28 @@ $ npm install google-home-notifier
 
 #### Usage
 ```javascript
-var googlehome = require('google-home-notifier');
-var language = 'pl'; // if not set 'us' language will be used
+const googlehome = require('./google-home-notifier');
+const WAIT_MSEC =  6 * 1000;//wait for search devices
 
-googlehome.device('Google Home', language); // Change to your Google Home name
-// or if you know your Google Home IP
-// googlehome.ip('192.168.1.20', language);
-
-googlehome.notify('Hey Foo', function(res) {
-  console.log(res);
-});
+setTimeout(function(){
+  // After search and cache devices...
+  googlehome.getDevices().forEach(
+    function(device){
+      var pattern = new RegExp(device.fn);// Means multiple devices can be called
+      var message = "I am " + device.fn;// or MP3 URL
+      googlehome.notify(// googlehome.play, if MP3
+        pattern, message, 
+        function(res) { console.log(res); }
+      );
+    }
+  );
+}, WAIT_MSEC);
 ```
 
 #### Listener
+
+TODO: fix to 'server.js'
+
 If you want to run a listener, take a look at the example.js file. You can run this from a Raspberry Pi, pc or mac. 
 The example uses ngrok so the server can be reached from outside your network. 
 I tested with ifttt.com Maker channel and it worked like a charm.
