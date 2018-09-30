@@ -60,7 +60,7 @@ app.listen(serverPort, function () {
   ngrok.connect(param, function (err, url) {
     ngrok_url = url;
     console.log('local access:');
-    console.log('    http://localhost: ' + serverPort.toString());
+    console.log('    http://localhost:' + serverPort.toString());
     console.log('GET example:');
     console.log('    curl -X GET ' + url + '/google-home-devices');
     console.log('    curl -X GET ' + url + '/google-home-outerurl');

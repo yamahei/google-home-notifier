@@ -49,7 +49,7 @@ var _searchDevices = function(fnPattern){// Regexp => [device, ...]
 var _searchAndCache = function(callback){//[Function] => void
 
   if(!!nowSearching){ throw new Error("already searching"); }
-
+  
   browser.start();
   browser.on('serviceUp', function(service) {
 
