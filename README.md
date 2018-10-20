@@ -4,10 +4,8 @@ Enhanced the correspondence of multiple devices.
 
 #### Installation
 ```sh
-$ npm install yamahei/google-home-notifier
-# only if error, try below and retry upper.
-# dns_sd_bindings.target.mk:159: ターゲット 'Release/obj.target/dns_sd_bindings/src/dns_sd.o' のレシピで失敗しました
-$ sudo apt-get install libnss-mdns libavahi-compat-libdnssd-dev
+$ git clone https://github.com/yamahei/google-home-notifier.git
+$ npm install
 ```
 
 #### Usage
@@ -58,7 +56,7 @@ curl -X POST -d "http://domain/file.mp3" https://xxxxx.ngrok.io/google-home-noti
 If you are running from Raspberry Pi make sure you have the following before nunning "npm install":
 Use the latest nodejs dist.
 ```sh
-curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 sudo apt-get install nodejs
 ```
 Also install these packages:
