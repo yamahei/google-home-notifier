@@ -4,7 +4,7 @@ var ngrok = require('ngrok');
 var bodyParser = require('body-parser');
 var app = express();
 const serverPort = 8091; // default port
-const NGROK_TOKEN="79qZNDKvXWu9mnDS56jQV_7GAhfF2JuJVhrUKxq4qgC"
+const NGROK_TOKEN="YOUR_NGROK_TOKEN_OR_EMPTY"
 
 var ngrok_url = null;
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -56,7 +56,8 @@ app.get('/google-home-outerurl', function (req, res) {
 })
 
 app.listen(serverPort, function () {
-  var param = { addr: serverPort, authtoken: NGROK_TOKEN };
+  var param = { addr: serverPort };
+  if(NGROK_TOKEN){ param.authtoken = NGROK_TOKEN };
   ngrok.connect(param, function (err, url) {
     ngrok_url = url;
     console.log('local access:');
