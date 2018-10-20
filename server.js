@@ -4,32 +4,36 @@ var ngrok = require('ngrok');
 var bodyParser = require('body-parser');
 var app = express();
 const serverPort = 8091; // default port
-const NGROK_TOKEN="YOUR_NGROK_TOKEN_OR_EMPTY"
+const NGROK_TOKEN="";//"YOUR_NGROK_TOKEN_OR_EMPTY"
 
 var ngrok_url = null;
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.post('/google-home-notifier', urlencodedParser, function (req, res) {
   
-  if (!req.body) return res.sendStatus(400)
-  console.log(req.body);
+  if (!req.body) {
+    res.sendStatus(400);
+    res.send("[ERROR]request body is empty!");
+  }
+  //console.log(req.body);
   
   var text = req.body.text;//ATTENTION: message or mp3-url
   var names = req.body.names;//ATTENTION: regexp pattern
   
   if (text && names){
+    console.log("notify[text={}, names={}]", text, names);
     try {
       if (text.startsWith('http')){
         var mp3_url = text;
         googlehome.play(names, mp3_url, function(notifyRes) {
           console.log(notifyRes);
-          res.send(names + ' will play sound from url: ' + mp3_url + '\n');
         });
+        res.send(names + ' will play sound from url: ' + mp3_url + '\n');
       } else {
         googlehome.notify(names, text, function(notifyRes) {
           console.log(notifyRes);
-          res.send(names + ' will say: ' + text + '\n');
         });
+        res.send(names + ' will say: ' + text + '\n');
       }
     } catch(err) {
       console.log(err);
@@ -37,7 +41,7 @@ app.post('/google-home-notifier', urlencodedParser, function (req, res) {
       res.send(err);
     }
   }else{
-    res.send('Please GET "text=Hello Google Home&names=HOGE|FUGA"');
+    res.send('[ERROR]Please GET "text=Hello Google Home&names=HOGE|FUGA"');
   }
 })
 
@@ -59,6 +63,10 @@ app.listen(serverPort, function () {
   var param = { addr: serverPort };
   if(NGROK_TOKEN){ param.authtoken = NGROK_TOKEN };
   ngrok.connect(param, function (err, url) {
+    if(!url){
+      console.log(param);
+      throw new Error(err)
+    }
     ngrok_url = url;
     console.log('local access:');
     console.log('    http://localhost:' + serverPort.toString());
