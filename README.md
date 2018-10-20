@@ -4,7 +4,10 @@ Enhanced the correspondence of multiple devices.
 
 #### Installation
 ```sh
-$ npm install google-home-notifier
+$ npm install yamahei/google-home-notifier
+# only if error, try below and retry upper.
+# dns_sd_bindings.target.mk:159: ターゲット 'Release/obj.target/dns_sd_bindings/src/dns_sd.o' のレシピで失敗しました
+$ sudo apt-get install libnss-mdns libavahi-compat-libdnssd-dev
 ```
 
 #### Usage
