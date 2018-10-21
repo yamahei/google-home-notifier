@@ -4,7 +4,7 @@ var ngrok = require('ngrok');
 var bodyParser = require('body-parser');
 var app = express();
 const serverPort = 8091; // default port
-const NGROK_TOKEN="";//"YOUR_NGROK_TOKEN_OR_EMPTY"
+const NGROK_TOKEN="";//your ngrok token or empty
 
 var ngrok_url = null;
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -21,19 +21,19 @@ app.post('/google-home-notifier', urlencodedParser, function (req, res) {
   var names = req.body.names;//ATTENTION: regexp pattern
   
   if (text && names){
-    console.log("notify[text={}, names={}]", text, names);
+    console.log("notify[text=%s, names=%s]", text, names);
     try {
       if (text.startsWith('http')){
         var mp3_url = text;
         googlehome.play(names, mp3_url, function(notifyRes) {
           console.log(notifyRes);
         });
-        res.send(names + ' will play sound from url: ' + mp3_url + '\n');
+        res.send(names + ' will play sound from url: %s \n', mp3_url);
       } else {
         googlehome.notify(names, text, function(notifyRes) {
           console.log(notifyRes);
         });
-        res.send(names + ' will say: ' + text + '\n');
+        res.send(names + ' will say: %s \n', text);
       }
     } catch(err) {
       console.log(err);
@@ -69,12 +69,11 @@ app.listen(serverPort, function () {
     }
     ngrok_url = url;
     console.log('local access:');
-    console.log('    http://localhost:' + serverPort.toString());
+    console.log('    http://localhost:%d', serverPort);
     console.log('GET example:');
-    console.log('    curl -X GET ' + url + '/google-home-devices');
-    console.log('    curl -X GET ' + url + '/google-home-outerurl');
+    console.log('    curl -X GET http://localhost:%d/google-home-devices', serverPort);
+    console.log('    curl -X GET http://localhost:%d/google-home-outerurl', serverPort);
 	  console.log('POST example:');
-	  console.log('    curl -X POST -d "text=Hello Google Home" -d "names=.*" ' + url + '/google-home-notifier');
+	  console.log('    curl -X POST -d "text=Hello Google Home" -d "names=.*" %s/google-home-notifier', url);
   });
 })
-//curl -X POST -d "text=Hello Google" -d "names=.*" https://ea5ff8c3.ngrok.io/google-home-notifier?text=hello&names=.*

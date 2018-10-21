@@ -97,3 +97,10 @@ eval(html.match(/TKK='[0-9]+.[0-9]+'/g)[0]);
 ```
 
 see: https://qiita.com/k_keisuke/items/2974ddaf2bf24a3ea32e
+
+3: And if you have ngrok account, Modify the following file "server.js"
+
+Find this line:
+```javascript
+const NGROK_TOKEN="";//your ngrok token or empty
+```
