@@ -11,7 +11,7 @@ opt = {
     # if true, not jiho
     :no_jiho => false,
     # if true, not send url to heroku
-    :send_url => false,
+    :no_send_url => false,
 }
 OptionParser.new do |_opt|
     _opt.on('-c', '--config=VALUE') {|v| opt[:config] = v }
@@ -21,17 +21,17 @@ OptionParser.new do |_opt|
     _opt.parse!(ARGV)
 end
 p opt
-INNER_URL = "http://localhost:8091/google-home-outerurl"
+INNER_URL = "http://localhost:8091"#
 CONFIG = opt[:config] || File.expand_path("../timesignal.yaml", __FILE__)
 yaml = YAML.load_file(CONFIG)
 
 ##################
 # regist outer-url
-OUTER_URL = open(INNER_URL, "r"){|response| 
-    response.read
-}
 unless opt[:no_send_url] then
-        #TODO: regist
+    OUTER_URL = open("#{INNER_URL}/google-home-outerurl", "r"){|response| 
+        response.read
+    }
+    #TODO: regist
 end
 
 ######
@@ -41,7 +41,7 @@ unless opt[:no_jiho] then
         line["at"] == opt[:now] ? !option[:no_jiho] : false
     }.each{|line|
         p line
-        uri = URI.parse("#{OUTER_URL}/google-home-notifier")
+        uri = URI.parse("#{INNER_URL}/google-home-notifier")
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
