@@ -1,6 +1,6 @@
 require 'yaml'
 require "open-uri"
-require "net/https"
+require "net/http"# not "https"
 require 'optparse'
 
 #######
@@ -38,19 +38,12 @@ end
 # jiho
 unless opt[:no_jiho] then
     yaml.select{|line|
-        line["at"] == opt[:now] ? !option[:no_jiho] : false
+        line["at"] == opt[:now] ? !opt[:no_jiho] : false
     }.each{|line|
         p line
-        uri = URI.parse("#{INNER_URL}/google-home-notifier")
-        http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-        req = Net::HTTP::Post.new(uri.path)
-        req.set_form_data({
-            'text' => line['message'], 
-            'names' => line['fn']
-        })
-        res = http.request(req)
+        res = Net::HTTP.post_form(
+            URI.parse("#{INNER_URL}/google-home-notifier"),
+            { 'text' => line['message'], 'names' => line['fn'] }
+        )
     }
 end
