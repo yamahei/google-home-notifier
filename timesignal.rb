@@ -3,6 +3,7 @@ require "open-uri"
 require "net/http"# not "https"
 require 'optparse'
 
+GUID = ""# your guid then send outer-url
 #######
 # init
 opt = {
@@ -25,15 +26,6 @@ INNER_URL = "http://localhost:8091"#
 CONFIG = opt[:config] || File.expand_path("../timesignal.yaml", __FILE__)
 yaml = YAML.load_file(CONFIG)
 
-##################
-# regist outer-url
-unless opt[:no_send_url] then
-    OUTER_URL = open("#{INNER_URL}/google-home-outerurl", "r"){|response| 
-        response.read
-    }
-    #TODO: regist
-end
-
 ######
 # jiho
 unless opt[:no_jiho] then
@@ -46,4 +38,19 @@ unless opt[:no_jiho] then
             { 'text' => line['message'], 'names' => line['fn'] }
         )
     }
+end
+
+##################
+# regist outer-url
+unless opt[:no_send_url] && !GUID.empty? then
+    OUTER_URL = open("#{INNER_URL}/google-home-outerurl", "r"){|response| 
+        response.read
+    }
+    TUNNEL_URL = "https://gh-tunnel.herokuapp.com"
+    unless OUTER_URL.empty? then
+        res = Net::HTTP.post_form(
+            URI.parse("#{TUNNEL_URL}/regist/#{GUID}"),
+            { 'url' => OUTER_URL }
+        )
+    end
 end

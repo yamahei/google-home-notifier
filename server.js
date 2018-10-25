@@ -9,6 +9,7 @@ const NGROK_TOKEN="";//your ngrok token or empty
 var ngrok_url = null;
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+app.use('/static', express.static(__dirname + '/static'));
 app.post('/google-home-notifier', urlencodedParser, function (req, res) {
     
     if (!req.body) {
