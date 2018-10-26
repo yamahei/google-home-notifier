@@ -100,7 +100,13 @@ see: https://qiita.com/k_keisuke/items/2974ddaf2bf24a3ea32e
 
 3: And if you have ngrok account, Modify the following file "server.js"
 
-Find this line:
 ```javascript
 const NGROK_TOKEN="";//your ngrok token or empty
 ```
+
+4: And more, if you have a guid to regist outer-url, odify the following file "timesignal.rb"
+
+```ruby
+GUID = ""# your guid then send outer-url
+```
+NOTE: Do you want your guid? please call me!

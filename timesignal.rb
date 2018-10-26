@@ -2,8 +2,10 @@ require 'yaml'
 require "open-uri"
 require "net/http"# not "https"
 require 'optparse'
+require 'date'
 
 GUID = ""# your guid then send outer-url
+AUTO_SEND_INTERVAL_MIN = 5
 #######
 # init
 opt = {
@@ -12,7 +14,7 @@ opt = {
     # if true, not jiho
     :no_jiho => false,
     # if true, not send url to heroku
-    :no_send_url => false,
+    :no_send_url => (DateTime.now.min % AUTO_SEND_INTERVAL_MIN) != 0,
 }
 OptionParser.new do |_opt|
     _opt.on('-c', '--config=VALUE') {|v| opt[:config] = v }
