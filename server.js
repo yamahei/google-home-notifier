@@ -65,7 +65,9 @@ app.listen(serverPort, function () {
         console.log('GET example:');
         console.log('    curl -X GET http://localhost:%d/google-home-devices', serverPort);
         console.log('    curl -X GET http://localhost:%d/google-home-outerurl', serverPort);
+        console.log('    curl -X GET http://localhost:%d/static/jinglebell.mp3', serverPort);
         console.log('POST example:');
         console.log('    curl -X POST -d "text=Hello Google Home" -d "names=.*" %s/google-home-notifier', url);
+        console.log('    curl -X POST -d "text=jinglebell.mp3" -d "names=.*" %s/google-home-notifier', url);
     });
 });

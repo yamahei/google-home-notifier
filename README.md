@@ -9,6 +9,8 @@ $ npm install
 ```
 
 #### Usage
+
+see /PATH/TO/google-home-notifier/usage.js
 ```javascript
 const googlehome = require('./google-home-notifier');
 const WAIT_MSEC =  6 * 1000;//wait for search devices
@@ -30,9 +32,7 @@ setTimeout(function(){
 
 #### Listener
 
-TODO: fix to 'server.js'
-
-If you want to run a listener, take a look at the example.js file. You can run this from a Raspberry Pi, pc or mac. 
+If you want to run a listener, take a look at the server.js file. You can run this from a Raspberry Pi, pc or mac. 
 The example uses ngrok so the server can be reached from outside your network. 
 I tested with ifttt.com Maker channel and it worked like a charm.
 
@@ -41,16 +41,18 @@ $ git clone https://github.com/noelportugal/google-home-notifier
 $ cd google-home-notifier
 $ npm install
 $ node example.js
-Endpoints:
-    http://192.168.1.20:8091/google-home-notifier
-    https://xxxxx.ngrok.io/google-home-notifier
+Device found:  Google-Home-Mini-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (ベッドルーム), 192.168.x.y:8009
+Device found:  Google-Home-Mini-YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY (ファミリー ルーム), 192.168.x.z:8009
+=========================== Google home notifier started =========================
+local access:
+    http://localhost:8091
 GET example:
-curl -X GET https://xxxxx.ngrok.io/google-home-notifier?text=Hello+Google+Home  - to play given text
-curl -X GET https://xxxxx.ngrok.io/google-home-notifier?text=http%3A%2F%2Fdomain%2Ffile.mp3 - to play from given url
+    curl -X GET http://localhost:8091/google-home-devices
+    curl -X GET http://localhost:8091/google-home-outerurl
+    curl -X GET http://localhost:8091/static/jinglebell.mp3
 POST example:
-curl -X POST -d "text=Hello Google Home" https://xxxxx.ngrok.io/google-home-notifier - to play given text
-curl -X POST -d "http://domain/file.mp3" https://xxxxx.ngrok.io/google-home-notifier - to play from given url
-
+    curl -X POST -d "text=Hello Google Home" -d "names=.*" https://xxxxxxxx.ngrok.io/google-home-notifier
+    curl -X POST -d "text=jinglebell.mp3" -d "names=.*" https://xxxxxxxx.ngrok.io/google-home-notifier
 ```
 #### Raspberry Pi
 If you are running from Raspberry Pi make sure you have the following before nunning "npm install":
@@ -66,7 +68,8 @@ sudo apt-get install git-core libnss-mdns libavahi-compat-libdnssd-dev
 
 ## IMPORTANT: After "npm install"
 
-1: Modify the following file "node_modules/mdns/lib/browser.js"
+### 1: Modify the following file "node_modules/mdns/lib/browser.js"
+
 ```sh
 vi node_modules/mdns/lib/browser.js
 ```
@@ -85,7 +88,7 @@ Browser.defaultResolverSequence = [
 ];
 ```
 
-2: Modify the following file "node_modules/google-tts-api/lib/key.js"
+### 2: Modify the following file "node_modules/google-tts-api/lib/key.js"
 
 Find this line:
 ```javascript
@@ -96,7 +99,9 @@ And change to:
 eval(html.match(/TKK='[0-9]+.[0-9]+'/g)[0]);
 ```
 
-3: And to service "server.js" with forever.
+#### Do you want run Jiho and Outer URL?
+
+##### to service "server.js" with forever.
 
 ```sh
 sudo npm install -g forever
@@ -110,7 +115,7 @@ const NGROK_TOKEN="";//your ngrok token or empty
 sudo -u pi $(which forever) start /PATH/TO/google-home-notifier/server.js
 ```
 
-4: Finally, periodically run "timesignal.rb" with cron
+##### periodically run "timesignal.rb" with cron
 
 ```ruby
 GUID = ""# your guid then send outer-url
