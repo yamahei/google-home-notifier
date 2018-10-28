@@ -2,6 +2,10 @@
 Send notifications to Google Home.
 Enhanced the correspondence of multiple devices.
 
+- Search and cache google home devices on network.
+- Send notify to Google Home(s) by name or regex pattern.
+- Provide directory to publish static file.
+
 #### Installation
 ```sh
 $ git clone https://github.com/yamahei/google-home-notifier.git
@@ -40,7 +44,7 @@ I tested with ifttt.com Maker channel and it worked like a charm.
 $ git clone https://github.com/yamahei/google-home-notifier.git
 $ cd google-home-notifier
 $ npm install
-$ node example.js
+$ node server.js
 Device found:  Google-Home-Mini-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (ベッドルーム), 192.168.x.y:8009
 Device found:  Google-Home-Mini-YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY (ファミリー ルーム), 192.168.x.z:8009
 =========================== Google home notifier started =========================
