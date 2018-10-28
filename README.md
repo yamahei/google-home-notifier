@@ -37,7 +37,7 @@ The example uses ngrok so the server can be reached from outside your network.
 I tested with ifttt.com Maker channel and it worked like a charm.
 
 ```sh
-$ git clone https://github.com/noelportugal/google-home-notifier
+$ git clone https://github.com/yamahei/google-home-notifier.git
 $ cd google-home-notifier
 $ npm install
 $ node example.js
