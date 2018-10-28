@@ -56,7 +56,7 @@ GET example:
     curl -X GET http://localhost:8091/static/jinglebell.mp3
 POST example:
     curl -X POST -d "text=Hello Google Home" -d "names=.*" https://xxxxxxxx.ngrok.io/google-home-notifier
-    curl -X POST -d "text=jinglebell.mp3" -d "names=.*" https://xxxxxxxx.ngrok.io/google-home-notifier
+    curl -X POST -d "text=https://xxxxxxxx.ngrok.io/static/jinglebell.mp3" -d "names=.*" https://xxxxxxxx.ngrok.io/google-home-notifier
 ```
 #### Raspberry Pi
 If you are running from Raspberry Pi make sure you have the following before nunning "npm install":
