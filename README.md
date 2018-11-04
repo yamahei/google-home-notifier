@@ -121,10 +121,6 @@ sudo -u pi $(which forever) start /PATH/TO/google-home-notifier/server.js
 
 ##### periodically run "timesignal.rb" with cron
 
-```ruby
-GUID = ""# your guid then send outer-url
-```
-NOTE: Do you want your guid? please call me!
 ```sh
 # crontab
 * *  *   *   *     $(which ruby) /PATH/TO/google-home-notifier/timesignal.rb
