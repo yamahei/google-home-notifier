@@ -115,6 +115,7 @@ sudo npm install -g forever
 const NGROK_TOKEN="";//your ngrok token or empty
 ```
 ```sh
+sudo nano /etc/rc.local
 # append this line to /etc/rc.local
 sudo -u pi $(which forever) start /PATH/TO/google-home-notifier/server.js
 ```
@@ -122,6 +123,7 @@ sudo -u pi $(which forever) start /PATH/TO/google-home-notifier/server.js
 ##### periodically run "timesignal.rb" with cron
 
 ```sh
-# crontab
+sudo crontab -e
+# append this line to root's crontab
 * *  *   *   *     $(which ruby) /PATH/TO/google-home-notifier/timesignal.rb
 ```
